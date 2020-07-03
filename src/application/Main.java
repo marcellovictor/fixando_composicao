@@ -20,22 +20,56 @@ public class Main {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		Product p1 = new Product("Celular", 1199.99);
-		Product p2 = new Product("Playstation", 3299.99);
+		//Client data:
 		
-		OrderItem oi1 = new OrderItem(3, 1199.99, p1);
-		OrderItem oi2 = new OrderItem(2, 3299.99, p2);
+		System.out.println("Enter client data:");
+		System.out.print("Name: ");
+		String name = sc.nextLine();
+		System.out.print("Email: ");
+		String email = sc.nextLine();
+		System.out.print("Birth date (DD/MM/YYYY): ");
+		String birthDate = sc.nextLine();
 		
-		Client client = new Client("Alex Ferguson",
-				"alexferguson@gmail.com",
-				DateFormats.standard.parse("31/12/1941"));
+		//Instanciação do cliente:
 		
-		Order order = new Order(new Date(), OrderStatus.valueOf("SHIPPED"), client);
-		order.addItem(oi1);
-		order.addItem(oi2);
+		Client client = new Client(name, email, DateFormats.standard.parse(birthDate));
 		
-		System.out.println(oi1);
-		System.out.println(client);
+		//Order data:
+		
+		System.out.println("Enter order data:");
+		System.out.print("Status: ");
+		OrderStatus status = OrderStatus.valueOf(sc.nextLine());
+		System.out.print("How many items to this order? ");
+		int n = sc.nextInt();
+		
+		//Instanciação da Order:
+		
+		Order order = new Order(new Date(), status, client);
+				
+		//Items data:
+		
+		for (int i=1; i<=n; i++) {
+			System.out.println("Enter #" + i + " item data:");
+			System.out.print("Product name: ");
+			sc.nextLine();
+			String product_name = sc.nextLine();
+			System.out.print("Product price: ");
+			Double product_price = sc.nextDouble();
+			
+			//Instanciação do produto:
+			
+			Product product = new Product(product_name, product_price);
+			
+			System.out.print("Quantity: ");
+			Integer quantity = sc.nextInt();
+			
+			//Instanciação e adição do item:
+			
+			OrderItem item = new OrderItem(quantity, product_price, product);
+			
+			order.addItem(item);
+		}
+		
 		System.out.println();
 		System.out.println(order);
 		
